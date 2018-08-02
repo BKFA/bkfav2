@@ -160,7 +160,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\ElfinderServiceProvider::class,
     ],
 
     /*
@@ -221,7 +221,7 @@ return [
 
     'nbrPages' => [
         'front' => [
-            'posts' => 10,
+            'posts' => 3,
             'users' => 10,
         ],
         'back' => [

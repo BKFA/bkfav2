@@ -20,6 +20,7 @@ class CreateUserTable extends Migration
             $table->string('password');
             $table->integer('role')->default(0);
             $table->integer('point')->default(0);
+            $table->string('avata')->nullable();
             $table->date('birthday')->nullable();
             $table->string('job')->nullable();
             $table->string('education')->nullable();

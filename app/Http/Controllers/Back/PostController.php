@@ -65,6 +65,10 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+         if ($request->file('img') != null && !checkExtensionImage($request->file('img')->getClientOriginalExtension())) {
+
+            return back()->with('warning', __('Không hỗ trợ định dạng file này, bạn chọn fila là ảnh với đuôi là png, jpg, ....!'));
+        }
         $this->repository->store($request);
 
         return redirect(route('posts.index'))->with('message', __('The post has been successfully created'));
@@ -106,9 +110,15 @@ class PostController extends Controller
     public function update(PostRequest $request, Post $post)
     {
         $this->authorize('manage', $post);
-        $this->repository->update($post, $request);
+        $ext = $request->file('img')->getClientOriginalExtension();
+        if (!checkExtensionImage($ext)) {
 
-        return back()->with('message', __('The post has been successfully updated'));
+            return back()->with('warning', __('Không hỗ trợ định dạng file này!'));
+        }else{
+            $this->repository->update($post, $request);
+
+            return back()->with('message', __('The post has been successfully updated'));
+        }
     }
 
     /**

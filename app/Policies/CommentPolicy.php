@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\ {User, Comment};
+use App\Policies\Policy;
 
 class CommentPolicy extends Policy
 {
@@ -15,7 +16,6 @@ class CommentPolicy extends Policy
      */
     public function manage(User $user, Comment $comment)
     {
-        
-        return $user->id == '2';
+        return $user->id === $comment->user_id;
     }
 }

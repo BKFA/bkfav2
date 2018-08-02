@@ -16,8 +16,8 @@ class CreateAdvertisementTable extends Migration
         Schema::create('advertisements', function (Blueprint $table) {
             $table->increments('id');
             $table->string('des_adve')->unique();
-            $table->string('slug_adve');
-            $table->string('url_adve');
+            $table->string('slug_adve')->nullable();;
+            $table->string('url_adve')->nullable();;
             $table->string('url_img')->nullable();
             $table->timestamps();
         });

@@ -1,0 +1,17 @@
+{
+  "name": "library",
+  "version": "1.0.1",
+  "authors": [
+    "trantrongbinh <tranbinhbak@gmail.com>"
+  ],
+  "description": "Library Frontend Bower",
+  "main": "/",
+  "keywords": [
+    "library"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/trantrongbinh/library_frontend.git",
+  "ignore": [
+    "README.md"
+  ]
+}
