@@ -15,21 +15,13 @@ class Thumb
      * @param $img
      * @return void
      */
-    public static function makeThumbPath($img)
+    public static function makeThumbPath($img, $str)
     {
-        $url = null;
-        if (!is_null($img)) {
-            $ext = $img->getClientOriginalExtension();
-            if (!checkExtensionImage($ext)) {
-
-                return redirect('back.posts.create')->with('warning', __('Không hỗ trợ định dạng file này!'));
-            }
-            $url = substr(time() . mt_rand() . '_' . $img->getClientOriginalName(), -190); 
-            while (file_exists('upload/posts'  . $url)) {
-                $url = substr(time() . mt_rand() . '_' . $img->getClientOriginalName(), -190);
-            }
-            $img->move('upload/posts', $url);
+        $url = substr(time() . mt_rand() . '_' . $img->getClientOriginalName(), -190); 
+        while (file_exists(getUrlFileUpload($img->getClientOriginalExtension(), $str). $url)) {
+            $url = substr(time() . mt_rand() . '_' . $img->getClientOriginalName(), -190);
         }
+        $img->move(getUrlFileUpload($img->getClientOriginalExtension(), $str), $url);
 
         return $url;
     }

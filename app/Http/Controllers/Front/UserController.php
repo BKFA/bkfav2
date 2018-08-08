@@ -133,8 +133,30 @@ class UserController extends Controller
      */
     public function avata(Request $request, User $user)
     {
-
         return $this->repository->avata($request, $user);
+    }
+
+    /**
+     * Get posts with search
+     *
+     * @param  \App\Http\Requests\SearchRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $search = $request->key;
+        if($search == '%20')
+        {
+            $users = $this->repository->getAll($this->nbrPages);
+        }
+        else
+        {
+            $users = User::select('id', 'name', 'email', 'point', 'avata', 'education')->whereValid(true)->where('role', '!=', 1)->Where('name', 'like', "%$search%")->orwhere('email', 'like', "%$search%")->withCount('follows')->OrderBy('follows_count', 'desc')->get();
+        }
+
+        return [
+            'html' => view('front/partials/list-user', compact('users'))->render(),
+        ];
     }
 
 }

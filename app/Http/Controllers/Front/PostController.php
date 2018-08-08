@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\ {
     Http\Requests\AddPostRequest,
+    Http\Requests\QuestionRequest,
     Http\Requests\SearchRequest,
     Http\Controllers\Controller,
     Repositories\PostRepository,
@@ -63,6 +64,7 @@ class PostController extends Controller
      */
     public function show(Request $request, $slug)
     {
+        // dd($slug);
         $user = $request->user();
 
         return view('front.pages.detail', array_merge($this->postRepository->getPostBySlug($slug), compact('user')));
@@ -125,6 +127,10 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $this->authorize('manage', $post);
+        if($request->file('img') != null && !checkExtensionImage($request->file('img')->getClientOriginalExtension())){
+             return back()->with('warning', __('Không hỗ trợ định dạng file này, bạn chọn fila là ảnh với đuôi là png, jpg, ....!'));
+        }
+
         $request->merge([
             'meta_des' => $request->title,
             'meta_keyword' => 'New Post, TTB Blogs',
@@ -183,14 +189,14 @@ class PostController extends Controller
      * @param  \App\Http\Requests\PostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function question(Request $request, $type)
+    public function question(QuestionRequest $request, $type)
     {
         $request->merge([
             'type' => $type,
         ]);
         $this->postRepository->store($request);
 
-        return redirect(route('posts.index'))->with('message', __('The post has been successfully created'));
+        return back()->with('message', __('The post has been successfully created'));
     }
 
     /**
@@ -206,7 +212,6 @@ class PostController extends Controller
             'html' => view('front/partials/home-list', compact('posts'))->render(),
         ];
 
-        // return response ()->json($posts);
     }
 
     /**

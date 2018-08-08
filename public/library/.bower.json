@@ -1,0 +1,25 @@
+{
+  "name": "library",
+  "authors": [
+    "trantrongbinh <tranbinhbak@gmail.com>"
+  ],
+  "description": "Library Frontend Bower",
+  "main": "/",
+  "keywords": [
+    "library"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/trantrongbinh/library_frontend.git",
+  "ignore": [
+    "README.md"
+  ],
+  "_release": "dfb1bafee9",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "dfb1bafee9322c430a3465da71df1d8fc6cfc15f"
+  },
+  "_source": "https://github.com/trantrongbinh/library_frontend.git",
+  "_target": "*",
+  "_originalSource": "library"
+}

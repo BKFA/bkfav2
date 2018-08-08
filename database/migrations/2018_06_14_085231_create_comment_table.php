@@ -20,10 +20,10 @@ class CreateCommentTable extends Migration
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
             $table->string('content_cmt');
-            $table->integer('parent')->nullable();
-            $table->integer('like')->default(0);
-            $table->integer('dislike')->default(0);
-            $table->integer('status')->default(1);
+            $table->integer('parent_id')->nullable()->index();
+            $table->integer('lft')->nullable()->index();
+            $table->integer('rgt')->nullable()->index();
+            $table->integer('depth')->nullable();
             $table->timestamps();
         });
     }

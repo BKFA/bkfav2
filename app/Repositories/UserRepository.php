@@ -41,8 +41,8 @@ class UserRepository
      */
     public function avata($request, $user)
     {
-        $url = $this->thumb->makeThumbPath($request->file('file'));
-        if ($url != null) {
+        if($request->file('file') != null && checkExtensionImage($request->file('file')->getClientOriginalExtension())){
+            $url = $this->thumb->makeThumbPath($request->file('file'), 'users');
             if ( $user->avata != 'avata.png' && file_exists('upload/users/' . $user->avata)) unlink('upload/users/' . $user->avata);
         }else{
             $url = 'avata.png';

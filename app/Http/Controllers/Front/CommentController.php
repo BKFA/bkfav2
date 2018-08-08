@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\ {
     Http\Controllers\Controller,
     Http\Requests\CommentRequest,
@@ -43,6 +44,49 @@ class CommentController extends Controller
         ]);
 
         return back();
+    }
+
+    /**
+     * Store a newly created comment in storage with ajax
+     *
+     * @param  \App\http\requests\Request $request
+     * @param  integer $comment_id
+     * @return \Illuminate\Http\Response
+     */
+    public function submit(Request $request, $comment_id = null)
+    {
+        Comment::create ([
+            'content_cmt' => $request->content_cmt,
+            'post_id' => $request->id,
+            'user_id' => $request->user()->id,
+            'parent_id' => $comment_id,
+        ]);
+        $comment = Comment::latest()->firstOrFail();
+        return [
+            'html' => view('front/comments/comment', compact('comment'))->render(),
+        ];
+    }
+
+    /**
+     * Store a newly created childen comment in storage with ajax
+     *
+     * @param  \App\http\requests\Request $request
+     * @param  integer $comment_id
+     * @return \Illuminate\Http\Response
+     */
+    public function submitChild(Request $request, $comment_id = null)
+    {
+        $parent = Comment::find($request->parent_id);
+        Comment::create ([
+            'content_cmt' => $request->content_cmt,
+            'post_id' => $parent->post_id,
+            'user_id' => $request->user()->id,
+            'parent_id' => $comment_id,
+        ]);
+        $comment = Comment::latest()->firstOrFail();
+        return [
+            'html' => view('front/comments/comment', compact('comment'))->render(),
+        ];
     }
 
     /**

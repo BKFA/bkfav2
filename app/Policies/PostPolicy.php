@@ -10,6 +10,20 @@ class PostPolicy
 {
 
     /**
+     * Grant all abilities to administrator.
+     *
+     * @param  \App\Models\User  $user
+     * @return bool
+     */
+    public function before(User $user)
+    {
+        if ($user->role === 1) {
+            
+            return true;
+        }
+    }
+
+    /**
      * Determine whether the user can manage the post.
      *
      * @param  \App\Models\User  $user
