@@ -81,6 +81,8 @@ class PostRepository
         return $this->queryActiveOrderByDate()->paginate(10);
     }
 
+    
+
     /**
      * Get active posts for specified tag.
      *
